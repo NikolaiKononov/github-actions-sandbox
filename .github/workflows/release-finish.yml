@@ -43,7 +43,7 @@ jobs:
 
       - name: Bump package.json version to release
         run: |
-          npm version --git-tag-version=false ${{ github.event.inputs.version }}
+          npm version --git-tag-version=false patch
 
       - name: Commit changes
         run: |
