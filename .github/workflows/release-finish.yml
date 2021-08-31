@@ -69,7 +69,7 @@ jobs:
 
       - name: Release finish
         if: ${{always()}}
-        run: echo ${{ MERGE_CONFLICTS }}
+        run: echo ${{ env.MERGE_CONFLICTS }}
 
 
       - name: Release finish
