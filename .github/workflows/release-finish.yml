@@ -69,11 +69,11 @@ jobs:
           MERGE_CONFLICTS: "false"
 
       - name: Release finish
-        if: ${{MERGE_CONFLICTS == "false"}}
+        if: ${{env.MERGE_CONFLICTS == "false"}}
         run: |
           git flow release finish ${{ github.event.inputs.version }} -m "chore: version bumped" ${{ github.event.inputs.version }}
 
       - name: Release publish
-        if: ${{MERGE_CONFLICTS == "false"}}
+        if: ${{env.MERGE_CONFLICTS == "false"}}
         run: |
           git push --all --follow-tags --no-verify
