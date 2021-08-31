@@ -70,7 +70,11 @@ jobs:
       - name: Release finish
         if: ${{always()}}
         run: |
-          echo "ACTIONS_ALLOW_UNSECURE_COMMANDS=true" >> $GITHUB_ENV
+          echo ${{MERGE_CONFLICTS}}
+
+      - name: Release finish
+        if: ${{always()}}
+        run: |
           git flow release finish ${{ github.event.inputs.version }} -m "chore: version bumped" ${{ github.event.inputs.version }}
 
       - name: Release publish
