@@ -56,8 +56,8 @@ jobs:
           git checkout develop
           git merge release/${{ github.event.inputs.version }}
           git checkout release/${{ github.event.inputs.version }}
-        env:
-          MERGE_CONFLICTS: false
+          echo "MERGE_CONFLICTS=false" >> $GITHUB_ENV
+
       - name: Resolve package.json conflicts
         if: ${{ failure() }} 
         run: |
@@ -65,8 +65,7 @@ jobs:
           git add package.json
           git commit -m "merge release to develop"
           git checkout release/${{ github.event.inputs.version }}
-        env:
-          MERGE_CONFLICTS: false
+          echo "MERGE_CONFLICTS=false" >> $GITHUB_ENV
 
       - name: Release finish
         if: ${{always()}}
