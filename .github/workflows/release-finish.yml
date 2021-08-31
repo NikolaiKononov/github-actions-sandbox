@@ -8,6 +8,8 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    env:
+      MERGE_CONFLICTS: true
     steps:
       - run: echo "ACTIONS_ALLOW_UNSECURE_COMMANDS=true" >> $GITHUB_ENV
 
@@ -54,6 +56,8 @@ jobs:
           git checkout develop
           git merge release/${{ github.event.inputs.version }}
           git checkout release/${{ github.event.inputs.version }}
+        env:
+          MERGE_CONFLICTS: false
       - name: Resolve package.json conflicts
         if: ${{ failure() }} 
         run: |
@@ -61,11 +65,15 @@ jobs:
           git add package.json
           git commit -"merge release to develop"
           git checkout release/${{ github.event.inputs.version }}
+        env:
+          MERGE_CONFLICTS: false
 
       - name: Release finish
+        if: ${{!MERGE_CONFLICTS}}
         run: |
           git flow release finish ${{ github.event.inputs.version }} -m "chore: version bumped" ${{ github.event.inputs.version }}
 
       - name: Release publish
+        if: ${{!MERGE_CONFLICTS}}
         run: |
           git push --all --follow-tags --no-verify
