@@ -69,14 +69,17 @@ jobs:
 
       - name: Release finish
         if: ${{always()}}
-        run: echo ${ {MERGE_CONFLICTS} }
+        run: echo ${{ MERGE_CONFLICTS }}
+
 
       - name: Release finish
-        if: ${{always()}}
+        continue-on-error: true
+        if: ${{ env.MERGE_CONFLICTS==false }}
         run: |
           git flow release finish ${{ github.event.inputs.version }} -m "chore: version bumped" ${{ github.event.inputs.version }}
 
       - name: Release publish
-        if: ${{env.MERGE_CONFLICTS == false && always() }}
+        continue-on-error: true
+        if: ${{ env.MERGE_CONFLICTS==false }}
         run: |
           git push --all --follow-tags --no-verify
