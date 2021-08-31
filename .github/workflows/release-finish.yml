@@ -59,7 +59,7 @@ jobs:
         run: |
           grep -lr '<<<<<<<' package.json | xargs git checkout --theirs
           git add package.json
-          git commit
+          git commit -"merge release to develop"
           git checkout release/${{ github.event.inputs.version }}
 
       - name: Release finish
