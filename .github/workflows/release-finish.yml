@@ -63,17 +63,17 @@ jobs:
         run: |
           grep -lr '<<<<<<<' package.json | xargs git checkout --theirs
           git add package.json
-          git commit -"merge release to develop"
+          git commit -m "merge release to develop"
           git checkout release/${{ github.event.inputs.version }}
         env:
           MERGE_CONFLICTS: false
 
       - name: Release finish
-        if: ${{env.MERGE_CONFLICTS == false}}
+        if: ${{env.MERGE_CONFLICTS == false && always() }}
         run: |
           git flow release finish ${{ github.event.inputs.version }} -m "chore: version bumped" ${{ github.event.inputs.version }}
 
       - name: Release publish
-        if: ${{env.MERGE_CONFLICTS == false}}
+        if: ${{env.MERGE_CONFLICTS == false && always() }}
         run: |
           git push --all --follow-tags --no-verify
