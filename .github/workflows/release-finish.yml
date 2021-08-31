@@ -43,11 +43,17 @@ jobs:
 
       - name: Bump package.json version to release
         run: |
-          npm version --git-tag-version=false patch
+          npm version --git-tag-version=false ${{ github.event.inputs.version }}
 
       - name: Commit changes
         run: |
           git commit -a -m "ci: version bump to ${{ github.event.inputs.version }}"
+
+      - name: Resolve conflicts on develop
+        run: |
+          git checkout develop
+          git merge release/${{ github.event.inputs.version }} -Xtheirs
+          git checkout release/${{ github.event.inputs.version }}
 
       - name: Release finish
         run: |
