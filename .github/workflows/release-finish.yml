@@ -52,7 +52,8 @@ jobs:
       - name: Resolve conflicts on develop
         run: |
           git checkout develop
-          git merge release/${{ github.event.inputs.version }} -Xtheirs
+          git merge release/${{ github.event.inputs.version }}
+          grep -lr '<<<<<<<' package.json | xargs git checkout --theirs
           git checkout release/${{ github.event.inputs.version }}
 
       - name: Release finish
