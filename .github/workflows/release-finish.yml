@@ -57,7 +57,7 @@ jobs:
       - name: Resolve package.json conflicts
         if: ${{ failure() }} 
         run: 
-          grep -lr '<<<<<<<' package.json` | xargs | xargs git checkout --theirs
+          grep -lr '<<<<<<<' package.json | xargs git checkout --theirs
           git add package.json
           git commit
           git checkout release/${{ github.event.inputs.version }}
