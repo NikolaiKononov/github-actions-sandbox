@@ -52,7 +52,7 @@ jobs:
       - name: Resolve conflicts on develop
         run: |
           git checkout develop
-          git merge release/${{ github.event.inputs.version }} --Xtheirs
+          git merge release/${{ github.event.inputs.version }} -Xtheirs
           git checkout release/${{ github.event.inputs.version }}
 
       - name: Release finish
