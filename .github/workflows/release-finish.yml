@@ -49,16 +49,18 @@ jobs:
         run: |
           git commit -a -m "ci: version bump to ${{ github.event.inputs.version }}"
 
-      - name: Resolve conflicts on develop
+      - name: Merge release to develop
         run: |
           git checkout develop
           git merge release/${{ github.event.inputs.version }}
           git checkout release/${{ github.event.inputs.version }}
+      - name: Resolve package.json conflicts
         if: {{ failure() }} 
         run: 
           grep -lr '<<<<<<<' package.json` | xargs | xargs git checkout --theirs
           git add package.json
           git commit
+          git checkout release/${{ github.event.inputs.version }}
 
       - name: Release finish
         run: |
