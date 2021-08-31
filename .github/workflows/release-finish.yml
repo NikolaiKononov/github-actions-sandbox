@@ -71,7 +71,7 @@ jobs:
         continue-on-error: true
 
       - name: Check merging failures
-        if: steps.conflict_resolve.outcome != 'success' || steps.release_merge.outcome != 'success'
+        if: steps.conflict_resolve.outcome == 'success' || steps.release_merge.outcome == 'success'
         run: exit 1
 
       - name: Release finish
