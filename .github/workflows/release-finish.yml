@@ -41,9 +41,15 @@ jobs:
           git checkout release/${{ github.event.inputs.version }}
           git flow init -d
 
+      - name: Resolve conflicts on develop
+        run: |
+          git checkout develop
+          git merge release/${{ github.event.inputs.version }} --Xtheirs
+          git checkout release/${{ github.event.inputs.version }}
+
       - name: Bump package.json version to release
         run: |
-          npm version --git-tag-version=false patch
+          npm version --git-tag-version=false ${{ github.event.inputs.version }}
 
       - name: Commit changes
         run: |
