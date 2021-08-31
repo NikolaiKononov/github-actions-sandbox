@@ -53,8 +53,12 @@ jobs:
         run: |
           git checkout develop
           git merge release/${{ github.event.inputs.version }}
-          grep -lr '<<<<<<<' package.json | xargs git checkout --theirs
           git checkout release/${{ github.event.inputs.version }}
+        if: {{ failure() }} 
+        run: 
+          grep -lr '<<<<<<<' package.json` | xargs | xargs git checkout --theirs
+          git add package.json
+          git commit
 
       - name: Release finish
         run: |
