@@ -63,6 +63,8 @@ jobs:
       - name: Resolve package.json conflicts
         id: conflict_resolve
         run: |
+          CONFLICT_LINE="`grep -n '<<<<<' package.json`"
+          if [ $CONFLICT_LINE != "3:<<<<<<< HEAD" ]; then exit 1; fi
           grep -lr '<<<<<<<' package.json | xargs git checkout --theirs
           git add package.json
           git commit -m "merge release to develop"
