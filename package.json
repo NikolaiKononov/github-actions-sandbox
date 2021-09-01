@@ -1,9 +1,10 @@
 {
   "name": "github-actions-sandbox",
-  "version": "3.0.3",
+  "version": "3.0.5",
   "description": "Example semver releases",
   "scripts": {
-    "test": "exit 0"
+    "test": "exit 0",
+    "lint": "exit 0"
   },
   "repository": {
     "type": "git",
