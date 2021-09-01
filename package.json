@@ -1,6 +1,6 @@
 {
   "name": "github-actions-sandbox",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Example semver releases",
   "scripts": {
     "test": "exit 0"
@@ -13,6 +13,5 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Bombaharris/github-actions-sandbox/issues"
-  },
-  "homepage": "https://github.com/Bombaharris/github-actions-sandbox#readme"
+  }
 }
