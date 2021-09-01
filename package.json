@@ -3,7 +3,8 @@
   "version": "3.0.5-0",
   "description": "Example semver releases",
   "scripts": {
-    "test": "exit 0"
+    "test": "exit 0",
+    "lint": "exit 0"
   },
   "repository": {
     "type": "git",
