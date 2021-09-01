@@ -62,10 +62,11 @@ jobs:
 
       - name: Resolve package.json conflicts
         id: conflict_resolve
+        if: steps.release_merge.outcome != 'success'
         run: |
           CONFLICT_FIRST_LINE=$(grep -n '<<<<<<<' package.json)
           CONFLICT_LAST_LINE=$(grep -n '>>>>>>>' package.json)
-          if [ "$CONFLICT_FIRST_LINE" != "3:<<<<<<< HEAD" ] || [ "$CONFLICT_LAST_LINE" != "7:>>>>>>> release/${{github.event.inputs.version}}" ]; then exit 1; fi
+          if [ "$CONFLICT_FIRST_LINE" != "3:<<<<<<< HEAD" ] || [ "$CONFLICT_LAST_LINE" != "7:>>>>>>> release/${{github.event.inputs.version}}" ]; then throw("resolve conflicts manuallu"); fi
           grep -lr '<<<<<<<' package.json | xargs git checkout --theirs
           git add package.json
           git commit -m "merge release to develop"
